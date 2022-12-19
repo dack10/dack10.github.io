@@ -1,0 +1,209 @@
+:root{
+    --clr-primary: #2962ff;
+    --clr-primary-hover:#0d47a1;
+    --clr-gray-med:#78909c;
+    --clr-gray-light:#cfd8dc;
+}
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #6a11cb;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+    }
+
+body{
+    background-color: #6a11cb;
+    background: #6a11cb;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+}
+
+#seccionUsuario #Amigos .div-shadow{
+    width: 300px;
+    height: 250px;
+    background: #fff;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    cursor:pointer;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.13);
+}
+
+#seccionUsuario #Amigos .div-shadow::before{
+    content: "";
+    position: absolute;
+    top: 2px;
+    width: 95%;
+    height: 80px;
+    z-index: 1;
+    border-radius: 10px 10px 0 0;
+    background: #ff9472;
+    box-shadow: 0 0 20px rgba(0,0,0,0.13);
+    transform-origin:bottom;
+    transition: transform .1s;
+}
+
+#seccionUsuario #Amigos .div-shadow:hover::before{
+    transform: translateY(-5px) scale(1.1);
+}
+
+#seccionUsuario #Amigos .div-shadow .img{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    z-index: 10;
+    transform: translateY(50px);
+    border:10px solid #fff;
+    overflow: hidden;
+    position: absolute;
+    background: #fff;
+
+}
+
+#seccionUsuario #Amigos .div-shadow .img img{
+    width: 120%;
+    height: 120%;
+    transform: translate(-8%,.8%);
+}
+
+#seccionUsuario #Amigos .div-shadow .container{
+    width: 100%;
+    height: 50px;
+    transform: translateY(170px);
+    align-items: center;
+}
+
+#seccionUsuario #Amigos .div-shadow .btn{
+    width: 95px;
+    padding: 10px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    
+    background: #ff9472;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 0 20px rgba(0,0,0, 0.13);
+    cursor: pointer;
+}
+
+
+
+#Amigos{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 2em 0em;
+}
+
+#Bloqueados{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 2em 0em;
+}
+
+#Musica{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin:2em 0em;
+}
+#seccionUsuario #Bloqueados .div-shadow{
+    width: 300px;
+    height: 250px;
+    background: #fff;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    cursor:pointer;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.13);
+}
+
+#seccionUsuario #Bloqueados .div-shadow::before{
+    content: "";
+    position: absolute;
+    top: 2px;
+    width: 95%;
+    height: 80px;
+    z-index: 1;
+    border-radius: 10px 10px 0 0;
+    background: #ff9472;
+    box-shadow: 0 0 20px rgba(0,0,0,0.13);
+    transform-origin:bottom;
+    transition: transform .1s;
+}
+
+#seccionUsuario #Bloqueados .div-shadow:hover::before{
+    transform: translateY(-5px) scale(1.1);
+}
+
+#seccionUsuario #Bloqueados .div-shadow .img{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    z-index: 10;
+    transform: translateY(50px);
+    border:10px solid #fff;
+    overflow: hidden;
+    position: absolute;
+    background: #fff;
+
+}
+
+#seccionUsuario #Bloqueados .div-shadow .img img{
+    width: 120%;
+    height: 120%;
+    transform: translate(-8%,.8%);
+}
+
+#seccionUsuario #Bloqueados .div-shadow .container{
+    width: 100%;
+    height: 50px;
+    transform: translateY(170px);
+    align-items: center;
+}
+
+#seccionUsuario #Bloqueados .div-shadow .btn{
+    width: 95px;
+    padding: 10px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    
+    background: #ff9472;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 0 20px rgba(0,0,0, 0.13);
+    cursor: pointer;
+}
+
+.btn-mostrar:active,
+.btn-mostrar:hover{
+    background-color: var(--clr-primary-hover);
+}
+.nav-item{
+    border-radius: 10px;
+    border-color: #0d2191;
+    border-width: 2px;
+    border-style: solid;
+    font-size: medium;
+    display: block;
+    font-style:oblique;
+    align-items: center;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+

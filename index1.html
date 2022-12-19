@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
+    <title>Document</title>
+    <script src="./listaNodo.js"></script>
+    <script src="./ListaListas.js"></script>
+    <script src="./matrizDispersa.js"></script>
+    <script src="./arbol.js"></script>
+    <script src="listaDoble.js" type="module"></script>
+    
+</head>
+<script>
+  var listaUsuarios= new listaenlazada();
+  var listaArtistas=new Listadelistas();
+  var matriz = new Matriz();
+  var arbol = new ABB();
+  listaUsuarios.agregar("2152635450101","DIEGO CULAJAY","DAC300","123",22222222,true);
+  listaUsuarios.agregar("2155658520101","DIEGO ALEJANDRO","DIEGO","123",22222222,false);
+  listaUsuarios.mostrar();
+  function registrarUsuario(){
+    let dpi= document.getElementById("txtDPI").value;
+    var nombre=document.getElementById("txtNAME").value;
+    var usuario=document.getElementById("txtUSER").value;
+    var contrasena=document.getElementById("txtPASS").value;
+    var numero=document.getElementById("txtPHONE").value;
+    listaUsuarios.agregar(dpi,nombre,usuario,contrasena,numero,false)
+    document.getElementById("txtDPI").value="";
+    document.getElementById("txtNAME").value="";
+    document.getElementById("txtUSER").value="";
+    document.getElementById("txtPASS").value="";
+    document.getElementById("txtPHONE").value="";
+    document.getElementById("seccionregistro").style.visibility='hidden';
+    document.getElementById("seccionregistro").style.display='none';
+    document.getElementById("seccionlogin").style.visibility='visible';
+    document.getElementById("seccionlogin").style.display='block';
+    listaUsuarios.mostrar();
+  }
+  function cargaCalendario(evento){
+    let numeromes=0;
+    let archivo = evento.target.files[0];
+    if(archivo){
+      let reader = new FileReader();
+      reader.onload=function(e){
+        let contenido=e.target.result;
+        let uno =JSON.parse(contenido.toString());
+
+        uno.forEach(element => {
+          month=element['month'].toString();
+          day=element['day'];
+          song=element['song'];
+          artist=element['artist'];
+          if(month=="January"){
+            numeromes=1;
+          }
+          else if(month=="February"){
+            numeromes=2;
+          }
+          else if(month=="March"){
+            numeromes=3;
+          }
+          else if(month=="April"){
+            numeromes=4;
+          }
+          else if(month=="May"){
+            numeromes=5;
+          }
+          else if(month=="June"){
+            numeromes=6;
+          }
+          else if(month=="July"){
+            numeromes=7;
+          }
+          else if(month=="August"){
+            numeromes=8;
+          }
+          else if(month=="September"){
+            numeromes=9;
+          }
+          else if(month=="October"){
+            numeromes=10;
+          }
+          else if(month=="November"){
+            numeromes=11;
+          }
+          else if(month=="December"){
+            numeromes=12;
+          }
+          matriz.insertar(numeromes,day,month,day,song,artist);
+        }
+        );
+        alert("ELEMENTOS CARGADOS");
+        matriz.recorrerFilas();
+      };
+      reader.readAsText(archivo);
+      
+      
+    }
+    else{
+      alert("no se ha seleccionado archivo")
+    }
+
+
+  }
+
+  function cargaPostcast(evento){
+    let archivo = evento.target.files[0];
+    if(archivo){
+      let reader = new FileReader();
+      reader.onload=function(e){
+        let contenido=e.target.result;
+        
+        let uno =JSON.parse(contenido.toString());
+        
+        uno.forEach(element => {
+          name=element['name'];
+          topic=element['topic'];
+          duration=element['duration'];
+          guest=element['guests'];
+          arbol.insertar(name,topic,duration,guest)
+        }
+        );
+        alert("ELEMENTOS CARGADOS");
+        arbol.preorden();
+       
+      };
+      reader.readAsText(archivo);
+      
+      
+    }
+    else{
+      alert("no se ha seleccionado archivo")
+    }
+
+
+  }
+  function ingresarAdmin(){
+    let chekeado=false;
+    
+    let usuariologin=document.getElementById("txtUSERLOGIN").value;
+    let passlogin=document.getElementById("txtPASSLOGIN").value;
+    if(document.getElementById("admin").checked){
+      chekeado=true;
+      if(listaUsuarios.buscar(usuariologin,passlogin,chekeado)==1){
+      
+      document.getElementById("seccionlogin").style.visibility='hidden';
+      document.getElementById("seccionlogin").style.display='none';
+      document.getElementById("seccionadmin").style.visibility='visible';
+      document.getElementById("seccionadmin").style.display='block';
+
+    }
+    else{
+      alert("ADMIN no existe");
+    }
+    }
+    else{
+      console.log("no fue chekeado");
+      chekeado=false;
+      if(listaUsuarios.buscar(usuariologin,passlogin,chekeado)==1){
+        document.getElementById("seccionlogin").style.visibility='hidden';
+        document.getElementById("seccionlogin").style.display='none';
+        document.getElementById("seccionadmin").style.visibility='hidden';
+        document.getElementById("seccionadmin").style.display='none';
+        document.getElementById("seccionUsuario").style.visibility='visible';
+        document.getElementById("seccionUsuario").style.display="block";
+    }
+    else{
+      alert("USUARIO no existe");
+    }
+      
+
+    }
+    
+  }
+  function cerrarAdmin(){
+    document.getElementById("seccionadmin").style.visibility='hidden';
+    document.getElementById("seccionadmin").style.display='none';
+    document.getElementById("seccionlogin").style.visibility='visible';
+    document.getElementById("seccionlogin").style.display='block';
+
+  }
+
+  function cerrarUser(){
+    document.getElementById("seccionUsuario").style.visibility='hidden';
+    document.getElementById("seccionUsuario").style.display='none';
+    document.getElementById("seccionlogin").style.visibility='visible';
+    document.getElementById("seccionlogin").style.display='block';
+
+  }
+  function ingresarUser(){
+    let chekeado=false;
+    let usuariologin=document.getElementById("txtUSERLOGIN").value;
+    let passlogin=document.getElementById("txtPASSLOGIN").value;
+    if(document.getElementById("admin").checked){
+      chekeado=true;
+    }
+    else{
+      chekeado=false;
+    }
+    
+    
+  }
+
+  function cargaCanciones(evento){
+    let archivo = evento.target.files[0];
+    if(archivo){
+      let reader = new FileReader();
+      reader.onload=function(e){
+        let contenido=e.target.result;
+        
+        let uno =JSON.parse(contenido.toString());
+        
+        uno.forEach(element => {
+          artist=element['artist']
+          cancion=element['name']
+          duracion=element['duration']
+          gender=element['gender']
+          listaArtistas.InsertarValores(artist,cancion);
+        }
+        );
+        alert("ELEMENTOS CARGADOS");
+        listaArtistas.MostrarValores("Hadley Chastenet");
+       
+      };
+      reader.readAsText(archivo);
+      
+      
+    }
+    else{
+      alert("no se ha seleccionado archivo")
+    }
+
+  }
+  function cargaArtistas(evento){
+    let archivo = evento.target.files[0];
+    if(archivo){
+      let reader = new FileReader();
+      reader.onload=function(e){
+        let contenido=e.target.result;
+        
+        let uno =JSON.parse(contenido.toString());
+        
+        uno.forEach(element => {
+          name=element['name']
+          edad=element['ege']
+          pais=element['country']
+          listaArtistas.InsertarCabeceras(name,edad,pais);
+         
+        }
+        );
+        alert("ELEMENTOS CARGADOS");
+        listaArtistas.mostrarCabeceras();
+       
+      };
+      reader.readAsText(archivo);
+      
+      
+    }
+    else{
+      alert("no se ha seleccionado archivo")
+    }
+
+
+  }
+  function graficausuarios(){
+    document.getElementById("graficaArtistas").style.visibility='hidden';
+    document.getElementById("graficaArtistas").style.display='none';
+    document.getElementById("graficaMatriz").style.visibility='hidden';
+    document.getElementById("graficaMatriz").style.display='none';
+    document.getElementById("graficaPodcast").style.visibility='hidden';
+    document.getElementById("graficaPodcast").style.display='none';
+    document.getElementById("graficausuarios").style.visibility='visible';
+    document.getElementById("graficausuarios").style.display="block";
+    listaUsuarios.exportRender();
+  }
+
+  function graficaArtistas(){
+    document.getElementById("graficausuarios").style.visibility='hidden';
+    document.getElementById("graficausuarios").style.display='none';
+    document.getElementById("graficaMatriz").style.visibility='hidden';
+    document.getElementById("graficaMatriz").style.display='none';
+    document.getElementById("graficaPodcast").style.visibility='hidden';
+    document.getElementById("graficaPodcast").style.display='none';
+    document.getElementById("graficaArtistas").style.visibility='visible';
+    document.getElementById("graficaArtistas").style.display="block";
+    listaArtistas.exportRender();
+  }
+
+  function graficaMatriz(){
+    document.getElementById("graficaArtistas").style.visibility='hidden';
+    document.getElementById("graficaArtistas").style.display='none';
+    document.getElementById("graficausuarios").style.visibility='hidden';
+    document.getElementById("graficausuarios").style.display='none';
+    document.getElementById("graficaPodcast").style.visibility='visible';
+    document.getElementById("graficaPodcast").style.display='block';
+    document.getElementById("graficaMatriz").style.visibility='visible';
+    document.getElementById("graficaMatriz").style.display='block';
+    matriz.exportRender();
+  }
+
+  function graficaPodcast(){
+    document.getElementById("graficaArtistas").style.visibility='hidden';
+    document.getElementById("graficaArtistas").style.display='none';
+    document.getElementById("graficausuarios").style.visibility='hidden';
+    document.getElementById("graficausuarios").style.display='none';
+    document.getElementById("graficaMatriz").style.visibility='hidden';
+    document.getElementById("graficaMatriz").style.display='none';
+    document.getElementById("graficaPodcast").style.visibility='visible';
+    document.getElementById("graficaPodcast").style.display='block';
+    arbol.exportRender();
+  }
+  function cargaUsers(evento){
+    let archivo = evento.target.files[0];
+    if(archivo){
+      let reader = new FileReader();
+      reader.onload=function(e){
+        let contenido=e.target.result;
+        console.log(contenido.toString());
+        let uno =JSON.parse(contenido.toString());
+        console.log(uno);
+        uno.forEach(element => {
+          dpi=element['dpi'];
+          name=element['name']
+          user=element['username']
+          pass=element['password']
+          phone=element['phone']
+          admin=element['admin']
+          listaUsuarios.agregar(dpi,name,user,pass,phone,admin);
+        }
+        );
+        alert("ELEMENTOS CARGADOS");
+        listaUsuarios.mostrar();
+      };
+      reader.readAsText(archivo);
+      
+      
+    }
+    else{
+      alert("no se ha seleccionado archivo")
+    }
+
+
+  }
+  
+  function AddNew(){
+    var log=document.getElementById("txtUSERLOGIN").value;
+    var html=listaUsuarios.crearHtml();   
+    var divContainer= document.getElementById("Amigos");
+    var amigos=listaUsuarios.crearHtmlPila(log);
+    var ambos=html.toString()+"/n"+amigos.toString();
+    divContainer.innerHTML=ambos;
+
+  }
+
+  function addBloqueado(){
+    var log=document.getElementById("txtUSERLOGIN").value;  
+    var divContainer= document.getElementById("Bloqueados");
+    var amigos=listaUsuarios.crearHtmlCola(log);
+    divContainer.innerHTML=amigos;
+  }
+
+  function addMusica(){
+    var divContainer=document.getElementById("Musica");
+    var music = listaArtistas.crearHtml();
+    divContainer.innerHTML=music;
+  }
+
+  function addPlay(){
+    var log=document.getElementById("txtUSERLOGIN").value;  
+    var divContainer= document.getElementById("Playlist");
+    var amigos=listaUsuarios.crearHtmlCircular(log);
+    divContainer.innerHTML=amigos;
+
+    listaUsuarios.exportRenderPlaylist(log);
+
+  }
+  
+  function agregarAmigo(){
+
+    var logueado=document.getElementById("txtUSERLOGIN").value;
+    var ingreso=document.getElementById("txtUsuarioEleccion").value;
+    listaUsuarios.agregarAAmigos(logueado,ingreso);
+  }
+
+  function agregarCancion(){
+    var loguer=document.getElementById("txtUSERLOGIN").value;
+    var cancion=document.getElementById("txtUsuarioEleccion").value;
+    var artista=document.getElementById("txtUsuarioArtista").value;
+    listaUsuarios.agregarAPlaylist(loguer,artist,cancion);
+  }
+
+  function bloquearAmigo(){
+    var logueado3=document.getElementById("txtUSERLOGIN").value;
+    var sacadodepila=listaUsuarios.eliminarAmigo(logueado3);
+    listaUsuarios.bloquearAmigo(logueado3,sacadodepila);
+  }
+
+  function desbloquearAmigo(){
+    var logueado4=document.getElementById("txtUSERLOGIN").value;
+    var sacardecola=listaUsuarios.desbloquearAmigo(logueado4);
+    listaUsuarios.agregarAAmigos(logueado4,sacardecola)
+  }
+
+  function borrarAmigo(){
+    var logueado2=document.getElementById("txtUSERLOGIN").value;
+    var i=document.getElementById("txtUsuarioEleccion").value;
+    listaUsuarios.eliminarAmigo(logueado2);
+  }
+  
+  
+  
+  window.addEventListener('load',()=>{
+    document.getElementById('cargausuarios').addEventListener('change',cargaUsers);
+  });
+  window.addEventListener('load',()=>{
+    document.getElementById('cargaartistas').addEventListener('change',cargaArtistas);
+  });
+  window.addEventListener('load',()=>{
+    document.getElementById('cargacanciones').addEventListener('change',cargaCanciones);
+  });
+  window.addEventListener('load',()=>{
+    document.getElementById('cargamusica').addEventListener('change',cargaCalendario);
+  });
+  window.addEventListener('load',()=>{
+    document.getElementById('cargapodcast').addEventListener('change',cargaPostcast);
+  });
+
+
+</script>
+<body>
+    <section class="vh-100 gradient-custom" id="seccionlogin">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+      
+                  <div class="mb-md-5 mt-md-4 pb-5">
+      
+                    <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+                    <p class="text-white-50 mb-5">Please enter your username and password!</p>
+      
+                    <div class="form-outline form-white mb-4">
+                      <input type="text" id="txtUSERLOGIN" class="form-control form-control-lg" />
+                      <label class="form-label" for="typeEmailX">USERNAME</label>
+                    </div>
+                    
+      
+                    <div class="form-outline form-white mb-4">
+                      <input type="text" id="txtPASSLOGIN" class="form-control form-control-lg" />
+                      <label class="form-label" for="typePasswordX">PASSWORD</label>
+                    </div>
+                     <!-- Checkbox -->
+                    <div class="form-check d-flex justify-content-center mb-4">
+                        <input class="form-check-input me-2" type="checkbox" value="" id="admin" checked />
+                    </div>
+                    <label class="form-check-label" for="form2Example33">ADMIN</label>
+                    <p class="small mb-1 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
+                    <button class="btn btn-outline-light btn-lg px-5" onclick="ingresarAdmin()">Login</button>
+                  </div>
+      
+                  <div>
+                    <p class="mb-0">Don't have an account? 
+                        
+                    </p>
+                    <button class="btn btn-outline-light btn-lg px-5" onclick="mostrarRegistro()">REGISTER</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="vh-100 gradient-custom" id="seccionregistro" style="visibility: hidden; display: none; ">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+      
+                  <div class="mb-md-5 mt-md-4 pb-5">
+      
+                    <h2 class="fw-bold mb-2 text-uppercase">REGISTER</h2>
+                    <p class="text-white-50 mb-5">Please enter your data</p>
+      
+                    <div class="form-outline form-white mb-1">
+                      <input type="email" id="txtDPI" class="form-control form-control-lg" />
+                      <label class="form-label" for="typeEmailX">DPI</label>
+                    </div>
+                    <div class="form-outline form-white mb-1">
+                        <input type="text" id="txtNAME" class="form-control form-control-lg" />
+                        <label class="form-label" for="typePasswordX">NAME</label>
+                    </div>
+                    <div class="form-outline form-white mb-1">
+                        <input type="text" id="txtUSER" class="form-control form-control-lg" />
+                        <label class="form-label" for="typePasswordX">USERNAME</label>
+                    </div>
+                    <div class="form-outline form-white mb-1">
+                      <input type="text" id="txtPASS" class="form-control form-control-lg" />
+                      <label class="form-label" for="typePasswordX">PASSWORD</label>
+                    </div>
+                    <div class="form-outline form-white mb-1">
+                        <input type="text" id="txtPHONE" class="form-control form-control-lg" />
+                        <label class="form-label" for="typePasswordX">PHONE</label>
+                    </div>
+                    
+                    <button class="btn btn-outline-light btn-lg px-5" onclick="registrarUsuario()">Register</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="vh-100 gradient-custom" id="seccionadmin" style="display:none">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">MUSTER CLOUD</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5">HOME</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5">Usuarios</button>
+                    <br>
+                    <input type="file"  id="cargausuarios">
+                  </li>
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5">Artistas</button>
+                    <br>
+                    <input type="file"  id="cargaartistas">
+                  </li>
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5">Canciones</button>
+                    <br>
+                    <input type="file"  id="cargacanciones">
+                  </li>
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5">Musica Programada</button>
+                    <br>
+                    <input type="file"  id="cargamusica">
+                  </li>
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5">Podcast</button>
+                    <br>
+                    <input type="file"  id="cargapodcast">
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <button class="btn btn-outline-light btn-lg px-5"  onclick="graficausuarios()">USUARIOS</button>
+          <button class="btn btn-outline-light btn-lg px-5" onclick="graficaArtistas()">ARTISTA</button>
+          <button class="btn btn-outline-light btn-lg px-5" onclick="graficaMatriz()">MUSICA PROGRAMADA</button>
+          <button class="btn btn-outline-light btn-lg px-5" onclick="graficaPodcast()">PODCAST</button>
+          <label class="form-check-label">GRAFICAS</label>
+          <button class="btn btn-outline-light btn-lg px-5" onclick="cerrarAdmin()"></button>
+          <div id="graficausuarios"></div>
+          <div id="graficaArtistas"></div>
+          <div id="graficaMatriz"></div>
+          <div id="graficaPodcast"></div>
+      </section>
+
+
+      <section class="vh-100 gradient-custom" id="seccionUsuario" style="visibility: hidden; display: none; ">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">MUSTER CLOUD</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5" onclick="addMusica()" >Musica</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5" onclick="addPlay()">PlayList</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5" onclick="addArtista()">Artistas</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="btn-mostrar" onclick="AddNew()">Amigos</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5" onclick="addBloqueado()">Bloqueados</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          
+          <button class="btn btn-outline-light btn-lg px-5" onclick="cerrarUser()">CERRAR SESION</button>
+          <button class="btn btn-outline-light btn-lg px-5" onclick="agregarAmigo()" >AGREGAR</button>
+          <button class="btn btn-outline-light btn-lg px-5" onclick="agregarCancion()" >AGREGAR CANCION</button>
+          <button class="btn btn-outline-light btn-lg px-5" onclick="bloquearAmigo()">BLOQUEAR</button>
+          <button class="btn btn-outline-light btn-lg px-5" onclick="borrarAmigo()">BORRAR AMIGO</button>
+          <button class="btn btn-outline-light btn-lg px-5" onclick="desbloquearAmigo()">DESBLOQUEAR AMIGO</button>
+          <input type="text" id="txtUsuarioEleccion">
+          <input type="text" id="txtUsuarioArtista">
+          <div id="Musica"></div>
+          <div id="Playlist"></div>
+          <div id="Artistas"></div>
+          <div id="Amigos"></div>
+          <div id="Bloqueados"></div>
+          <div id="Render"></div>
+      </section>
+
+      
+    
+
+      <script src="https://d3js.org/d3.v5.min.js"></script>
+      <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>   
+      <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+    <script >  
+        function mostrarRegistro(){
+            document.getElementById("seccionlogin").style.visibility='hidden';
+            document.getElementById("seccionlogin").style.display='none';
+            document.getElementById("seccionregistro").style.visibility='visible';
+            document.getElementById("seccionregistro").style.display='block';
+            
+        }
+        function mostrarLogin(){
+            document.getElementById("seccionregistro").style.visibility='hidden';
+            document.getElementById("seccionregistro").style.display='none';
+            document.getElementById("seccionlogin").style.visibility='visible';
+            document.getElementById("seccionlogin").style.display='block';
+
+        }
+
+        function login(){
+            document.getElementById("seccionlogin").style.visibility='hidden';
+            document.getElementById("seccionlogin").style.display='none';
+            document.getElementById("seccionadmin").style.visibility='visible';
+            document.getElementById("seccionadmin").style.display='block';
+        }
+    </script>
+   
+</body>
+</html>
