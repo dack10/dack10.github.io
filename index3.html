@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    
+    
+    <title>MOVIE</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+
+
+      
+    </style>
+    <script src="avl.js"></script>
+    <script src="listaSimple.js"></script>
+    <script src="arbol.js"></script>
+    <script src="hash.js"></script>
+    <script src="merkle.js"></script>
+    <script src="block.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    
+</head>
+<script>
+    var intervloTiempo=300000;
+    var textotransacciones="";
+
+    var listaUsuarios=new listaenlazada();
+    var listaPeliculas = new AVL();
+    var actores = new ABB();
+    var tablahash=new TableHash(20);
+    var merkle=new Merkle();
+    var bloques=new BlockChain()
+    var settt=setInterval(generarbloque,intervloTiempo);
+    listaUsuarios.agregar("2155931590101","DIEGO CULAJAY","DAC300","diego@gmail.com","123",22222222,true)
+    listaUsuarios.agregar("2155931590101","ALEJANDRO CULAJAY","ALEJANDRO","alejandro@gmail.com","123",33333333,false)
+    listaUsuarios.mostrar();
+
+    function cambiarTiempo(){
+      var chan=document.getElementById("tiempo").value;
+      clearInterval(settt);
+	    intervloTiempo = chan*1000;
+	    settt = setInterval(generarbloque,intervloTiempo);
+    }
+    function listaPelis(){
+      console.log(listaPeliculas.size);
+    
+    }
+
+    function informacion(nombre){
+      listaPeliculas.reseteartitulo();
+      let name= nombre;
+      let contpelicula=document.getElementById("titulopelicula");
+      document.getElementById("seccionUsuario").style.visibility="hidden";
+      document.getElementById("seccionUsuario").style.display="none";
+      document.getElementById("infopelicula").style.display="block";
+      document.getElementById("infopelicula").style.visibility="visible";
+      let textt=listaPeliculas.generarHtmltitulo(listaPeliculas.root,nombre.toString());
+      let ahorasi=listaPeliculas.titulohtml;
+      listaPeliculas.resetearcomentarios();
+      let coments=listaPeliculas.mostrarcomentarios(listaPeliculas.root,nombre.toString());
+      let com=listaPeliculas.comentss;
+      contpelicula.innerHTML=ahorasi+com;
+
+    }
+
+
+
+    function comentar(nombre){
+      let logueado=document.getElementById("txtUsuario").value;
+      let comentario=document.getElementById("ingresocomentario").value;
+      
+      listaPeliculas.agregarComentario(listaPeliculas.root,nombre.toString(),logueado,comentario);
+    }
+
+    function aquilarPelicula(nombre,descripcion){
+      let logueado=document.getElementById("txtUsuario").value;
+      listaUsuarios.alquilarPelicula(logueado,nombre,descripcion);
+      this.textotransacciones+=logueado.toString()+" - "+nombre.toString()+"\n";
+      merkle.add(logueado.toString()+" - "+nombre.toString());
+    }
+
+    function graficarmerkle(){
+      merkle.auth();
+      merkle.exportRender();
+    }
+
+    function modificarStar(pelicula){
+      let cant=document.getElementById("stars").value;
+      listaPeliculas.modificarEstrellas(listaPeliculas.root,pelicula,cant);
+
+    }
+    function mostrarpeliculas(){
+      const contenedor= document.getElementById("listapeliculas");
+      const btnagregar=document.getElementById("mostrarpeliculas");
+      let div= document.createElement('div');
+      listaPeliculas.generarHtml(listaPeliculas.root);
+      let generado=listaPeliculas.html;
+      div.innerHTML=generado;
+      contenedor.appendChild(div);  
+    }
+    function regresar1(){
+      document.getElementById("divpre").style.display="block";
+      document.getElementById("divpre").style.visibility="visible";
+      document.getElementById("login").style.visibility="hidden";
+      document.getElementById("login").style.display="none";
+      document.getElementById("seccionadmin").style.visibility='hidden';
+      document.getElementById("seccionadmin").style.display='none';
+      document.getElementById("vistaactores").style.display="none";
+      document.getElementById("vistaactores").style.visibility="hidden";
+      document.getElementById("seccionUsuario").style.visibility="visible";
+      document.getElementById("seccionUsuario").style.display="block";
+    }
+    function regresar11(){
+      document.getElementById("divpre").style.display="block";
+      document.getElementById("divpre").style.visibility="visible";
+      document.getElementById("login").style.visibility="hidden";
+      document.getElementById("login").style.display="none";
+      document.getElementById("seccionadmin").style.visibility='hidden';
+      document.getElementById("seccionadmin").style.display='none';
+      document.getElementById("vistaactores").style.display="none";
+      document.getElementById("vistaactores").style.visibility="hidden";
+      document.getElementById("seccionUsuario").style.visibility="visible";
+      document.getElementById("seccionUsuario").style.display="block";
+      document.getElementById("vistacategorias").style.display="none";
+      document.getElementById("vistacategorias").style.visibility="hidden";
+    }
+
+    function regresar3(){
+     
+      document.getElementById("login").style.visibility="hidden";
+      document.getElementById("login").style.display="none";
+      document.getElementById("seccionadmin").style.visibility='hidden';
+      document.getElementById("seccionadmin").style.display='none';
+      document.getElementById("vistaactores").style.display="none";
+      document.getElementById("vistaactores").style.visibility="hidden";
+      document.getElementById("seccionUsuario").style.visibility="visible";
+      document.getElementById("seccionUsuario").style.display="block";
+
+    }
+
+    function regresarALogin(){
+      document.getElementById("divpre").style.display="block";
+      document.getElementById("divpre").style.visibility="visible";
+      
+      document.getElementById("seccionadmin").style.visibility='hidden';
+      document.getElementById("seccionadmin").style.display='none';
+      document.getElementById("vistaactores").style.display="none";
+      document.getElementById("vistaactores").style.visibility="hidden";
+      document.getElementById("seccionUsuario").style.visibility="hidden";
+      document.getElementById("seccionUsuario").style.display="none";
+      document.getElementById("login").style.visibility="visible";
+      document.getElementById("login").style.display="flex";
+
+    }
+
+    function mostraractores(){
+      actores.resetearhtml();
+      document.getElementById("divpre").style.display="block";
+      document.getElementById("divpre").style.visibility="visible";
+      document.getElementById("login").style.visibility="hidden";
+      document.getElementById("login").style.display="none";
+      document.getElementById("seccionadmin").style.visibility='hidden';
+      document.getElementById("seccionadmin").style.display='none';
+      document.getElementById("seccionUsuario").style.visibility="hiden";
+      document.getElementById("seccionUsuario").style.display="none";
+      document.getElementById("vistaactores").style.display="block";
+      document.getElementById("vistaactores").style.visibility="visible";
+      const contenedor = document.getElementById("");
+
+      actores.generarHtml(actores.raiz);
+      let generado = actores.html;
+      contenedor.innerHTML=generado;
+    }
+
+    function mostrarcategorias(){
+      tablahash.resetearhtml();
+      document.getElementById("divpre").style.display="block";
+      document.getElementById("divpre").style.visibility="visible";
+      document.getElementById("login").style.visibility="hidden";
+      document.getElementById("login").style.display="none";
+      document.getElementById("seccionadmin").style.visibility='hidden';
+      document.getElementById("seccionadmin").style.display='none';
+      document.getElementById("seccionUsuario").style.visibility="hidden";
+      document.getElementById("seccionUsuario").style.display="none";
+      document.getElementById("vistaactores").style.display="none";
+      document.getElementById("vistaactores").style.visibility="hidden";
+      document.getElementById("vistacategorias").style.display="block";
+      document.getElementById("vistacategorias").style.visibility="visible";
+
+      const contenedor = document.getElementById("listadocategorias");
+
+      let generado=tablahash.generarHtml();
+      
+      contenedor.innerHTML=generado;
+
+    }
+    function mostrarBlock(){
+      document.getElementById("seccionadmin").style.visibility='hidden';
+      document.getElementById("seccionadmin").style.display='none';
+      document.getElementById("infopelicula").style.display="none"
+      document.getElementById("infopelicula").style.visibility="hidden";
+      document.getElementById("vistaactores").style.display="none";
+      document.getElementById("vistaactores").style.visibility="hidden";
+      document.getElementById("divpre").style.display="none";
+      document.getElementById("divpre").style.visibility="hidden";
+      document.getElementById("login").style.visibility="hidden";
+      document.getElementById("login").style.display="none";
+      document.getElementById("block").style.visibility="visible";
+      document.getElementById("block").style.display="block";
+    }
+
+    function regresar5(){
+      document.getElementById("block").style.display="none";
+      document.getElementById("block").style.visibility="hidden"
+      document.getElementById("seccionadmin").style.display="block";
+      document.getElementById("seccionadmin").style.visibility="visible";
+    }
+
+    //recorridos
+    function roadpre(){
+      actores.resetearhtml();
+      document.getElementById("divin").style.display="none";
+      document.getElementById("divin").style.visibility="hidden";
+      document.getElementById("divpost").style.display="none";
+      document.getElementById("divpost").style.visibility="hidden";
+    
+      document.getElementById("divpre").style.display="block";
+      document.getElementById("divpre").style.visibility="visible";
+      let contenedorpre = document.getElementById("divpre");
+      actores.generarHtml(actores.raiz);
+      let generado = actores.html;
+      contenedorpre.innerHTML=generado;
+    }
+
+    function roadin(){
+      actores.resetearhtml();
+      document.getElementById("divpre").style.display="none";
+      document.getElementById("divpre").style.visibility="hidden";
+      document.getElementById("divpost").style.display="none";
+      document.getElementById("divpost").style.visibility="hidden";
+    
+      document.getElementById("divin").style.display="block";
+      document.getElementById("divin").style.visibility="visible";
+      let contenedorin = document.getElementById("divin");
+      actores.generarHtmlInorder(actores.raiz);
+      let generado = actores.html;
+      contenedorin.innerHTML=generado;
+
+    }
+
+    function roadpost(){
+      actores.resetearhtml();
+      document.getElementById("divin").style.display="none";
+      document.getElementById("divpre").style.display="none";
+      document.getElementById("divin").style.visibility="hidden";
+      document.getElementById("divpre").style.visibility="hidden";
+      document.getElementById("divpost").style.display="block";
+      document.getElementById("divpost").style.visibility="visible";
+      let contenedorpost = document.getElementById("divpost");
+      
+      actores.generarHtmlPostorder(actores.raiz);
+      let generado = actores.html;
+      contenedorpost.innerHTML=generado;
+
+    }
+
+    function ingresarAdmin(){
+        let chekeado=false;
+    
+    let usuariologin=document.getElementById("txtUsuario").value;
+    let passlogin=document.getElementById("txtPassword").value;
+    if(document.getElementById("admin").checked){
+      chekeado=true;
+      if(listaUsuarios.buscar(usuariologin,passlogin,chekeado)==1){
+      document.getElementById("login").style.visibility="hidden";
+      document.getElementById("login").style.display="none";
+      document.getElementById("seccionadmin").style.visibility='visible';
+      document.getElementById("seccionadmin").style.display='block';
+
+    }
+    else{
+      alert("ADMIN no existe");
+    }
+    }
+    else{
+      console.log("no fue chekeado");
+      chekeado=false;
+      if(listaUsuarios.buscar(usuariologin,passlogin,chekeado)==1){
+        document.getElementById("login").style.visibility='hidden';
+        document.getElementById("login").style.display='none';
+        document.getElementById("seccionadmin").style.visibility='hidden';
+        document.getElementById("seccionadmin").style.display='none';
+        document.getElementById("seccionUsuario").style.visibility='visible';
+        document.getElementById("seccionUsuario").style.display="block";
+    }
+    else{
+      alert("USUARIO no existe");
+    }
+      
+
+    }
+    }
+
+    function cerrarAdmin(){
+    document.getElementById("seccionadmin").style.visibility='hidden';
+    document.getElementById("seccionadmin").style.display='none';
+    document.getElementById("login").style.visibility='visible';
+    document.getElementById("login").style.display="flex"
+
+  }
+
+  function cargaCategorias(evento){
+    let archivo = evento.target.files[0];
+    if(archivo){
+      let reader = new FileReader();
+      reader.onload=function(e){
+        let contenido=e.target.result;
+        console.log(contenido.toString());
+        let uno =JSON.parse(contenido.toString());
+        console.log(uno);
+        uno.forEach(element => {
+          id_cat=element['id_categoria'];
+          company=element['company']
+          tablahash.insert(id_cat,company);
+        }
+        );
+        alert("ELEMENTOS CARGADOS");
+        listaUsuarios.mostrar();
+      };
+      reader.readAsText(archivo);
+      
+      
+    }
+    else{
+      alert("no se ha seleccionado archivo")
+    }
+
+
+  }
+  window.addEventListener('load',()=>{
+    document.getElementById('cargaCategorias').addEventListener('change',cargaCategorias);
+  });
+
+  function cargaUsers(evento){
+    let archivo = evento.target.files[0];
+    if(archivo){
+      let reader = new FileReader();
+      reader.onload=function(e){
+        let contenido=e.target.result;
+        console.log(contenido.toString());
+        let uno =JSON.parse(contenido.toString());
+        console.log(uno);
+        uno.forEach(element => {
+          dpi=element['dpi'];
+          name=element['nombre_completo']
+          user=element['nombre_usuario']
+          correo=element['correo']
+          contrasenia=element['contrasenia']
+          telefono=element['telefono']
+          admin=false
+          listaUsuarios.agregar(dpi,name,user,correo,contrasenia,telefono,admin);
+        }
+        );
+        alert("ELEMENTOS CARGADOS");
+        listaUsuarios.mostrar();
+      };
+      reader.readAsText(archivo);
+      
+      
+    }
+    else{
+      alert("no se ha seleccionado archivo")
+    }
+
+
+  }
+  window.addEventListener('load',()=>{
+    document.getElementById('cargausuarios').addEventListener('change',cargaUsers);
+  });
+  
+  function generarbloque(){
+    let conte=document.getElementById("bloques");
+    let m=merkle.datablock
+    merkle.auth()
+    console.log(m)
+    let u=merkle.tophash.hash;
+    merkle.exportRender();
+    console.log("este es el top hash: "+u)
+    bloques.generarBloque(u,m)
+    var hhh=bloques.generarhtml(u);
+    conte.innerHTML=hhh;
+    bloques.resetearhtml();
+    merkle.resetearDot();
+    merkle.clear();
+  }
+  function graficaclientes(){
+    document.getElementById("graficapeliculas").style.visibility='hidden';
+    document.getElementById("graficapeliculas").style.display='none';
+    document.getElementById("graficacategorias").style.visibility='hidden';
+    document.getElementById("graficacategorias").style.display='none';
+    document.getElementById("graficaactores").style.visibility='hidden';
+    document.getElementById("graficaactores").style.display='none';
+    document.getElementById("graficaclientes").style.visibility='visible';
+    document.getElementById("graficaclientes").style.display="block";
+    listaUsuarios.exportRender();
+  }
+
+  function graficacategorias(){
+    document.getElementById("graficapeliculas").style.visibility='hidden';
+    document.getElementById("graficapeliculas").style.display='none';
+    document.getElementById("graficacategorias").style.visibility='hidden';
+    document.getElementById("graficacategorias").style.display='none';
+    document.getElementById("graficaactores").style.visibility='hidden';
+    document.getElementById("graficaactores").style.display='none';
+    document.getElementById("graficaclientes").style.visibility='hidden';
+    document.getElementById("graficaclientes").style.display="none";
+    document.getElementById("graficacategorias").style.visibility='visible';
+    document.getElementById("graficacategorias").style.display="block";
+    tablahash.exportRender();
+  }
+
+  function graficapeliculas(){
+   
+    document.getElementById("graficacategorias").style.visibility='hidden';
+    document.getElementById("graficacategorias").style.display='none';
+    document.getElementById("graficaactores").style.visibility='hidden';
+    document.getElementById("graficaactores").style.display='none';
+    document.getElementById("graficaclientes").style.visibility='hidden';
+    document.getElementById("graficaclientes").style.display="none";
+    document.getElementById("graficapeliculas").style.visibility='visible';
+    document.getElementById("graficapeliculas").style.display='block';
+    listaPeliculas.exportRender();
+  
+
+  }
+  
+  function graficaactores(){
+    document.getElementById("graficapeliculas").style.visibility='hidden';
+    document.getElementById("graficapeliculas").style.display='none';
+    document.getElementById("graficacategorias").style.visibility='hidden';
+    document.getElementById("graficacategorias").style.display='none';
+    document.getElementById("graficaclientes").style.visibility='hidden';
+    document.getElementById("graficaclientes").style.display="none";
+    document.getElementById("graficaactores").style.visibility='visible';
+    document.getElementById("graficaactores").style.display='block';
+    actores.exportRender();
+  }
+  function cargaPostcast(evento){
+    let archivo = evento.target.files[0];
+    if(archivo){
+      let reader = new FileReader();
+      reader.onload=function(e){
+        let contenido=e.target.result;
+        
+        let uno =JSON.parse(contenido.toString());
+        
+        uno.forEach(element => {
+          name=element['name'];
+          topic=element['topic'];
+          duration=element['duration'];
+          guest=element['guests'];
+          arbol.insertar(name,topic,duration,guest)
+        }
+        );
+        alert("ELEMENTOS CARGADOS");
+        arbol.preorden();
+       
+      };
+      reader.readAsText(archivo);
+      
+      
+    }
+    else{
+      alert("no se ha seleccionado archivo")
+    }
+
+
+  }
+
+  function descargarClientes() {
+    html2canvas($('#graficaclientes')[0]).then(function (canvas) {
+        $(".response").append(canvas);
+        return Canvas2Image.saveAsPNG(canvas);
+    });
+  }
+
+  function descargarClientes2() {
+    const $objetivo=document.getElementById("graficaclientes");
+    html2canvas($objetivo).then(canvas =>{
+      $(".reponse").append(canvas);
+      return Canvas2Image.saveAsPNG(canvas);
+    });
+  }
+
+  function descargarpeliculas() {
+    const $objetivo=document.getElementById("graficapeliculas");
+    html2canvas($objetivo).then(canvas =>{
+      $(".reponse").append(canvas);
+      return Canvas2Image.saveAsPNG(canvas);
+    });
+  }
+
+  function descargarcategorias() {
+    const $objetivo=document.getElementById("graficacategorias");
+    html2canvas($objetivo).then(canvas =>{
+      $(".reponse").append(canvas);
+      return Canvas2Image.saveAsPNG(canvas);
+    });
+  }
+
+  function descargaractores() {
+    const $objetivo=document.getElementById("graficaactores");
+    html2canvas($objetivo).then(canvas =>{
+      $(".reponse").append(canvas);
+      return Canvas2Image.saveAsPNG(canvas);
+    });
+  }
+
+
+
+
+  function cargaPeliculas(evento){
+    let archivo = evento.target.files[0];
+    if(archivo){
+      let reader = new FileReader();
+      reader.onload=function(e){
+        let contenido=e.target.result;
+        console.log(contenido.toString());
+        let uno =JSON.parse(contenido.toString());
+        console.log(uno);
+        uno.forEach(element => {
+          id_pelicula=element['id_pelicula'];
+          nombre_pelicula=element['nombre_pelicula']
+          descripcion=element['descripcion']
+          star=element['puntuacion_star']
+          precio=element['precion_Q']
+          pagina=element['paginas']
+          categoria=element['categoria']
+        
+          listaPeliculas.add(id_pelicula,nombre_pelicula,descripcion,star,precio,pagina,categoria);
+        }
+        );
+        alert("ELEMENTOS CARGADOS");
+        listaPeliculas.preorder(listaPeliculas.root);
+        
+      };
+      
+      reader.readAsText(archivo);
+      
+      
+    }
+    else{
+      alert("no se ha seleccionado archivo")
+    }
+
+
+  }
+    window.addEventListener('load',()=>{
+    document.getElementById('cargaPeliculas').addEventListener('change',cargaPeliculas);
+    });
+
+
+    function cargaActores(evento){
+    let archivo = evento.target.files[0];
+    if(archivo){
+      let reader = new FileReader();
+      reader.onload=function(e){
+        let contenido=e.target.result;
+        console.log(contenido.toString());
+        let uno =JSON.parse(contenido.toString());
+        console.log(uno);
+        uno.forEach(element => {
+          dni=element['dni'];
+          nombre_actor=element['nombre_actor']
+          correo=element['correo']
+          descripcion=element['descripcion']        
+          actores.insertar(dni,nombre_actor,correo,descripcion);
+        }
+        );
+        alert("ELEMENTOS CARGADOS");
+        actores.preorden();
+        
+      };
+      
+      reader.readAsText(archivo);
+      
+      
+    }
+    else{
+      alert("no se ha seleccionado archivo")
+    }
+
+
+  }
+    window.addEventListener('load',()=>{
+    document.getElementById('cargaActores').addEventListener('change',cargaActores);
+    });
+
+    
+      
+ 
+</script>
+<body>
+    <div class="container-form sign-up" id="login">
+        <div class="welcome-back">
+            <div class="message">
+                <h2>Bienvenido a MovieCats</h2>
+            </div>
+        </div>
+        <form class="formulario">
+            <h2 class="create-account">LOG-IN</h2>
+            <div class="iconos">
+                <div class="border-icon">
+                    <i class='bx bxs-movie-play'></i>
+                </div>
+                <div class="border-icon">
+                    <i class='bx bxs-star'></i>
+
+                </div>
+                <div class="border-icon">
+                    <i class='bx bxs-camera-movie' ></i>
+
+                </div>
+
+            </div>
+            <p class="cuenta-gratis">MOVIECAST</p>
+            <input type="text" id="txtUsuario" placeholder="USERNAME">
+            <input type="password" id="txtPassword" placeholder="PASSWORD">
+             <!-- Checkbox -->
+             <div class="form-check d-flex justify-content-center mb-4">
+                <input class="form-check-input me-2" type="checkbox" value="" id="admin" checked />
+            </div>
+            <input type="button" onclick="ingresarAdmin()" value="INICIO DE SESION">
+
+        </form>
+
+    </div>
+    <section class="vh-100 gradient-custom" id="seccionadmin" style="display:none; visibility: hidden;" >
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">MovieCats</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5">HOME</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5">CLIENTES</button>
+                    <br>
+                    <input type="file"  id="cargausuarios">
+                  </li>
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5">PELICULAS</button>
+                    <br>
+                    <input type="file"  id="cargaPeliculas">
+                  </li>
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5">ACTORES</button>
+                    <br>
+                    <input type="file"  id="cargaActores">
+                  </li>
+                  <li class="nav-item">
+                    <button class="btn btn-lg px-5">CATEGORIAS</button>
+                    <br>
+                    <input type="file"  id="cargaCategorias">
+                  </li>
+                  <li class="nav-item">
+                    <button id="accesoBlock"class="btn btn-lg px-5" onclick="mostrarBlock()">BLOCKCHAIN</button>
+                    <br>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <button class="btn btn-outline-light btn-lg px-5"  onclick="graficaclientes()">CLIENTES</button>
+          <button class="btn btn-outline-light btn-lg px-5" onclick="graficapeliculas()">PELICULAS</button>
+          <button class="btn btn-outline-light btn-lg px-5" onclick="graficaactores()">ACTORES</button>
+          <button class="btn btn-outline-light btn-lg px-5" onclick="graficacategorias()">CATEGORIAS</button>
+          <label class="form-check-label" id="lblgraficas">GRAFICAS</label>
+          <button class="btn btn-outline-light btn-lg px-5" onclick="cerrarAdmin()">CERRAR SESION</button>
+          
+         
+          <div id="graficaclientes"></div>
+          <div id="graficapeliculas"></div>
+          <div id="graficaactores"></div>
+          <div id="graficacategorias"></div>
+          
+          <button onclick="descargarClientes2()">CLIENTES</button>
+          <button onclick="descargaractores()">ACTORES</button>
+          <button onclick="descargarcategorias()">CATEGORIAS</button>
+          <button onclick="descargarpeliculas()">PELICULAS</button>
+      </section>
+      <section id="seccionUsuario" style="display: none;">
+        <button id="mostrarpeliculas" onclick="mostrarpeliculas()"> mostrar</button>
+        <button id="mostraractores" onclick="mostraractores()">VER ACTORES</button>
+        <button id="mostrarcategorias" onclick="mostrarcategorias()">VER CATEGORIAS</button>
+        <button id="regresarALogin" onclick="regresarALogin()">CERRAR SESION</button>
+        <div id="listapeliculas">
+        </div>
+      </section>
+      <section id="vistaactores" style="display: none;">
+        <div id="titulo">
+          <label> ACTORES</label>
+        </div>
+        <div id="recorridos">
+          <button id="inorden" onclick="roadin()">IN ORDEN</button>
+          <button id="preorden" onclick="roadpre()">PRE ORDEN</button>
+          <button id="postorden" onclick="roadpost()">POST ORDEN</button>
+          <button id="regresar1" onclick="regresar1()">REGRESAR</button>
+        </div>
+        <div id="listadoactores">
+          <div id="divpre" style="display:none"></div>
+          <div id="divin" style="display:none"></div>
+          <div id="divpost" style="display:none"></div>
+        </div>
+        
+      </section>
+      <section id="vistacategorias" style="display: none;">
+        <div id="titulo">
+          <label> CATEGORIAS</label>
+        </div>
+        <button id="regresar1" onclick="regresar11()">REGRESAR</button>
+        <div id="listadocategorias">
+          
+        </div>
+        
+      </section>
+      <section id="infopelicula" style="display: none;">
+        <button onclick="regresar3()">REGRESAR</button>
+        <div id="titulopelicula">
+          
+        </div>
+        
+      </section>
+      <section id="block" style="display: none;">
+        <button onclick="regresar5()">REGRESAR</button>
+        <button onclick="cambiarTiempo()">CAMBIAR TIEMPO</button>
+        <button onclick="generarbloque()">GENERAR BLOQUES</button>
+        <input type="text" name="" id="tiempo" placeholder="tiempo en segundos">
+        <button onclick="graficarmerkle()">MERKLE GRAFIC</button>
+        <div id="bloques"></div>
+        <div id="graficamerkle"></div>
+      </section>
+    <script src="script.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+      <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>   
+      <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+      <script src="https://superal.github.io/canvas2image/canvas2image.js "></script>
+      <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+      <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.1/dist/html2canvas.min.js"></script>
+      <script src="listap.js"></script>
+      <script src="sha256.js"></script>
+     
+      
+</body>
+</html>

@@ -1,9 +1,9 @@
-class Nodo{
-    constructor(_name,_topic,_guest,_duracion){
-        this.name=_name;
-        this.topic=_topic;
-        this.guest=_guest;
-        this.duracion=_duracion;
+class NodoAbb{
+    constructor(_dni,_nombre,_correo,_descripcion){
+        this.dni=_dni;
+        this.name=_nombre;
+        this.correo=_correo;
+        this.descripcion=_descripcion;
         this.izquierda = null;
         this.derecha = null;
     }
@@ -12,22 +12,22 @@ class Nodo{
 class ABB{
     constructor(){
         this.raiz = null;
-        this.prueba=""
-        
+        this.prueba="";
+        this.html="";
     }
     //metodo insertar
-    insertar(_name,_topic,_guest,_duracion){
-        this.raiz = this.add(_name,_topic,_guest,_duracion,this.raiz);
+    insertar(_dni,_nombre,_correo,_descripcion){
+        this.raiz = this.add(_dni,_nombre,_correo,_descripcion,this.raiz);
     }
     //metodo insertar recursivo
-    add(_name,_topic,_guest,_duracion,nodo){
+    add(_dni,_nombre,_correo,_descripcion,nodo){
         if(nodo == null){
-            return new Nodo(_name,_topic,_guest,_duracion);
+            return new NodoAbb(_dni,_nombre,_correo,_descripcion);
         }else{
-            if(_name>=nodo.name){
-                nodo.derecha = this.add(_name,_topic,_guest,_duracion, nodo.derecha);
+            if(_dni>=nodo.dni){
+                nodo.derecha = this.add(_dni,_nombre,_correo,_descripcion, nodo.derecha);
             }else{
-                nodo.izquierda = this.add(_name,_topic,_guest,_duracion, nodo.izquierda);
+                nodo.izquierda = this.add(_dni,_nombre,_correo,_descripcion, nodo.izquierda);
             }
         }
         return nodo;
@@ -73,7 +73,7 @@ class ABB{
 
     exportRender(){
         console.log(this.configraph2());
-        d3.select("#graficaPodcast").graphviz()
+        d3.select("#graficaactores").graphviz()
         .width(1900)
         .height(750)
         .renderDot(this.configraph2())
@@ -102,7 +102,7 @@ class ABB{
         graphviz+=`
         digraph G{
             rankdir="TB";
-            label="ARBOL PODCAST";
+            label="ARBOL ACTORES";
             node[shape=record arrowhead=diamond]
             node[style=filled]\n
             `;
@@ -156,5 +156,42 @@ class ABB{
         }*/
         return texto.toString();
     }
-}
+    resetearhtml(){
+        this.html="";
+    }
 
+    generarHtml(tmp) {
+        if (tmp != null) {
+            this.html+=`<div id="cardActor">
+                       <label>${tmp.name}</label>
+                       <p>Descripcion: ${tmp.descripcion}</p>
+                       </div>`;
+                       
+            this.generarHtml(tmp.izquierda);
+            this.generarHtml(tmp.derecha);
+        }
+    }
+
+    generarHtmlInorder(tmp) {
+        if (tmp != null) {           
+            this.generarHtmlInorder(tmp.izquierda);
+            this.html+=`<div id="cardActor">
+                       <label>${tmp.name}</label>
+                       <p>Descripcion: ${tmp.descripcion}</p>
+                       </div>`;
+            this.generarHtmlInorder(tmp.derecha);
+        }
+    }
+
+    generarHtmlPostorder(tmp) {
+        if (tmp != null) {           
+            this.generarHtmlPostorder(tmp.izquierda);
+            
+            this.generarHtmlPostorder(tmp.derecha);
+            this.html+=`<div id="cardActor">
+                       <label>${tmp.name}</label>
+                       <p>Descripcion: ${tmp.descripcion}</p>
+                       </div>`;
+        }
+    }
+}

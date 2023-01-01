@@ -1,199 +1,152 @@
+*{
+    font-family: "Poppins",sans-serif;
+}
 :root{
     --clr-primary: #2962ff;
     --clr-primary-hover:#0d47a1;
     --clr-gray-med:#78909c;
     --clr-gray-light:#cfd8dc;
 }
-.gradient-custom {
+
+
+
+/*.gradient-custom {
     /* fallback for old browsers */
-    background: #6a11cb;
+    /*background: #6a11cb;
     
     /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+   /* background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
     
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
-    }
+    /*background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+    }*/
+
 
 body{
-    background-color: #6a11cb;
-    background: #6a11cb;
-    
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
-    
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+ 
+    background-image: url("pelicula4.jpg");
+    background-repeat:repeat;
+    background-size:auto;    
 }
 
-#seccionUsuario #Amigos .div-shadow{
-    width: 300px;
-    height: 250px;
-    background: #fff;
-    border-radius: 10px;
-    position: relative;
+.container-form{
+    width: 90%;
+    height: 90vh;
     display: flex;
-    flex-wrap: wrap;
-    cursor:pointer;
-    justify-content: center;
-    box-shadow: 0 0 20px rgba(0,0,0,0.13);
+    justify-content: space-around;
+    transition: all .5s ease-out;
 }
 
-#seccionUsuario #Amigos .div-shadow::before{
-    content: "";
-    position: absolute;
-    top: 2px;
-    width: 95%;
-    height: 80px;
-    z-index: 1;
-    border-radius: 10px 10px 0 0;
-    background: #ff9472;
-    box-shadow: 0 0 20px rgba(0,0,0,0.13);
-    transform-origin:bottom;
-    transition: transform .1s;
-}
-
-#seccionUsuario #Amigos .div-shadow:hover::before{
-    transform: translateY(-5px) scale(1.1);
-}
-
-#seccionUsuario #Amigos .div-shadow .img{
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    z-index: 10;
-    transform: translateY(50px);
-    border:10px solid #fff;
-    overflow: hidden;
-    position: absolute;
-    background: #fff;
-
-}
-
-#seccionUsuario #Amigos .div-shadow .img img{
-    width: 120%;
-    height: 120%;
-    transform: translate(-8%,.8%);
-}
-
-#seccionUsuario #Amigos .div-shadow .container{
-    width: 100%;
-    height: 50px;
-    transform: translateY(170px);
-    align-items: center;
-}
-
-#seccionUsuario #Amigos .div-shadow .btn{
-    width: 95px;
-    padding: 10px;
-    border-radius: 10px;
-    outline: none;
-    border: none;
+.welcome-back{
+    display: flex;
+    text-align: center;
+    padding-top: 450px;
     
-    background: #ff9472;
-    color: #fff;
-    font-weight: 600;
-    box-shadow: 0 0 20px rgba(0,0,0, 0.13);
+   
+}
+
+.message{
+    padding: 1rem;
+    border-style: 5px black;
+}
+
+.message h2{
+    font: 1.7rem;
+    padding: 1rem 0;
+    font-size: 4rem;
+    color: rgb(139,69, 32);
+    -webkit-text-stroke:3px black;
+    background-image: url("pelicula3.jpeg");
+    border-radius: 10px;
+}
+.formulario{
+    width: 400px;
+    margin: 1rem;
+    padding: 1rem;
+    margin-left: -600px;
+    background-color: rgb(51,51,51,0.602);
+    text-align: center;
+}
+
+.create-account{
+    padding: 2.7rem 0;
+    font-size: 1.7rem;
+}
+
+.iconos{
+    width: 200px;
+    display: flex;
+    justify-content: space-around;
+    margin:auto
+}
+
+.border-icon{
+    height: 20px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    border: solid thin white;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    transition: all .3s ease-in;
+}
+
+.border-icon:hover{
+    background-color: #4a4aee;
     cursor: pointer;
 }
 
-
-
-#Amigos{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    margin: 2em 0em;
+.cuenta-gratis{
+    padding: 2rem 0;
 }
 
-#Bloqueados{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    margin: 2em 0em;
-}
 
-#Musica{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    margin:2em 0em;
-}
-#seccionUsuario #Bloqueados .div-shadow{
-    width: 300px;
-    height: 250px;
-    background: #fff;
-    border-radius: 10px;
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    cursor:pointer;
-    justify-content: center;
-    box-shadow: 0 0 20px rgba(0,0,0,0.13);
-}
-
-#seccionUsuario #Bloqueados .div-shadow::before{
-    content: "";
-    position: absolute;
-    top: 2px;
-    width: 95%;
-    height: 80px;
-    z-index: 1;
-    border-radius: 10px 10px 0 0;
-    background: #ff9472;
-    box-shadow: 0 0 20px rgba(0,0,0,0.13);
-    transform-origin:bottom;
-    transition: transform .1s;
-}
-
-#seccionUsuario #Bloqueados .div-shadow:hover::before{
-    transform: translateY(-5px) scale(1.1);
-}
-
-#seccionUsuario #Bloqueados .div-shadow .img{
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    z-index: 10;
-    transform: translateY(50px);
-    border:10px solid #fff;
-    overflow: hidden;
-    position: absolute;
-    background: #fff;
-
-}
-
-#seccionUsuario #Bloqueados .div-shadow .img img{
-    width: 120%;
-    height: 120%;
-    transform: translate(-8%,.8%);
-}
-
-#seccionUsuario #Bloqueados .div-shadow .container{
-    width: 100%;
-    height: 50px;
-    transform: translateY(170px);
-    align-items: center;
-}
-
-#seccionUsuario #Bloqueados .div-shadow .btn{
-    width: 95px;
-    padding: 10px;
-    border-radius: 10px;
-    outline: none;
+.formulario input{
+    width: 70%;
+    display: block;
+    margin: auto;
+    margin-bottom: 2rem;
+    background-color: transparent;
     border: none;
-    
-    background: #ff9472;
-    color: #fff;
-    font-weight: 600;
-    box-shadow: 0 0 20px rgba(0,0,0, 0.13);
-    cursor: pointer;
+    border-bottom: white thin solid;
+    text-align: center;
+    outline: none;
+    padding: .2rem 0;
+    font-size: .9rem;
+    color: white;
 }
 
-.btn-mostrar:active,
-.btn-mostrar:hover{
-    background-color: var(--clr-primary-hover);
+.formulario input[type="button"]{
+    width: 60%;
+    margin: auto;
+    border: solid thin white;
+    padding: .7rem;
+    border-radius: 2rem;
+    background-color: white;
+    font-weight: 600;
+    margin-top: 3rem;
+    font-size: .8rem;
+    cursor: pointer;
+    color: #222;
 }
+
+.formulario input[type="button"]:hover{
+    background-color:rgb(139,69, 32);
+}
+
+.sign-in{
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.sign-in.active{
+    opacity: 1;
+    visibility: visible;
+}
+
 .nav-item{
     border-radius: 10px;
     border-color: #0d2191;
@@ -207,3 +160,191 @@ body{
     font-family: 'Times New Roman', Times, serif;
 }
 
+
+#lblgraficas{
+    background-color: #0d2191;
+    border-radius: 10px;
+    font-size: 30px;
+    color:black;
+}
+
+
+#vistaactores #titulo{
+    width: 300px;
+    height: 100px;
+    background-color: #cfd8dc;
+    border-radius: 15px;
+    align-items: center;
+    font-style: italic;
+    font-size: 45px;
+    
+}
+
+#listadoactores label{
+    background-color:black;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    color:white;
+}
+#listadoactores p{
+    background-color: white;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    color:#222;
+}
+
+
+#listadoactores #cardActor{
+    display: block;
+    border-radius: 10px;
+    border-color: #222;
+
+    
+}
+#listadoactores{
+    padding: 45px;
+
+ }
+
+ #listapeliculas{
+    padding: 45px;
+   
+ }
+
+ #listapeliculas label{
+    background-color:black;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    color:white;
+
+ }
+
+ #listapeliculas #catalogo #lblPrecio{
+    background-color:green;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    color:white;
+
+ }
+
+ #listapeliculas #catalogo p{
+    background-color:white;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    color:black;
+
+ }
+
+ .star-widget{
+    display: flex;
+    place-items: center;
+ }
+
+
+  .star-widget label{
+    font-size: 45px;
+    color: #fd4;
+    padding: 10px;
+    float: right;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  input:not(:checked) label:hover,
+  input:not(:checked) label:hover label{
+    color:#fd4;
+  }
+
+  input:checked label{
+    color:#fd4;
+  }
+
+  input#rate-5:checked label{
+    color: #fe7;
+    text-shadow: 0 0 20px #952;
+  }
+
+  input:checked form{
+    display: block;
+  }
+  #titulopelicula{
+    padding: 45px;
+  }
+  #titulopelicula #titulopeli #lblnombre{
+    background-color:black;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    color:white;
+
+  }
+
+  #titulopelicula #titulopeli p{
+    background-color:white;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    color:black;
+    border: 2px solid rebeccapurple;
+    padding: .5em;
+    
+
+  }
+
+  #graficaclientes{
+    overflow-x: scroll;
+    display: none;
+    width: 1000px;
+    height: 200px;
+    border: 2px solid rebeccapurple;
+  }
+
+ #vistacategorias #titulo{
+    background-color: white;
+    font-size: 22px;
+    color: black;
+    border: 2px solid rebeccapurple;
+    padding: .5em;
+ }
+ #vistacategorias #listadocategorias{
+    padding: 45px;
+    display: flex;
+    flex-wrap: wrap;
+ }
+
+ #vistacategorias #listadocategorias #catalogo #label{
+    color: white;
+    padding: 45px;
+    margin: 10px;
+
+ }
+ #vistacategorias #listadocategorias #catalogo{
+    color: white;
+    padding: 45px;
+    margin: 10px;
+    background-color: black;
+    border-radius: 15px;
+    border: 2px solid white;
+
+ }
+
+ #vistacategorias #listadocategorias #catalogo #p{
+    color: white;
+    padding: 45px;
+    margin: 10px;
+    
+ }
+
+ #bloques{
+    display: flex;
+    overflow-x: scroll;
+ }
+
+ #bloque{
+    padding: 45px;
+    border: 2px solid white;
+    border-radius: 15px;
+    display: block;
+    width: 700px;
+    height: 400px;
+    background-color: black;
+    color: white;
+ }
